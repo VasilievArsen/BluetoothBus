@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "50529501485",
+    "firebase_url": "https://bluetoothbus-c92e2.firebaseio.com",
+    "project_id": "bluetoothbus-c92e2",
+    "storage_bucket": "bluetoothbus-c92e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50529501485:android:4c8a63ff0dc6ba6a7cd3a4",
+        "android_client_info": {
+          "package_name": "com.example.bb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50529501485-a59taggal5ept315ctmvohbfl547php7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDqHEXlUeSPebAPP2BHWwT5oK6AgwHVqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50529501485-a59taggal5ept315ctmvohbfl547php7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

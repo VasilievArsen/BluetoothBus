@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">BluetoothBus</string>
+    <string name="bluetoothbus">BlueToothBus</string>
+    <string name="bluetooth">Включить Bluetooth</string>
+    <string name="bluetoothoff">Выключить Bluetooth</string>
+    <string name="search">Поиск</string>
+    <string name="takedev">получить сопряженные устройства</string>
+    <string name="todo">TODO</string>
+    <string name="settings">Bruh</string>
+    <string name="title_location_permission">Ops</string>
+    <string name="text_location_permission">Opssss</string>
+    <string name="ok">Ok</string>
+    <string name="SearchBus">Пожалуйста, нажмите \"↻\"</string>
+    <string name="Rub">₽</string>
+    <string name="number"></string>
+    <string name="check">""</string>
+    <string name="title_activity_card">CardActivity</string>
+    <string name="cardbalance"></string>
+</resources>
