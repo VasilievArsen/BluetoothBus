@@ -13,6 +13,7 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import android.content.Context;
@@ -60,14 +61,17 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-    TextView mStatus, mPairedTV, mTextBon, mTextBoff, mTextCard, mTextRoute;
+    TextView mPairedTV, mTextBon, mTextBoff, mTextCard, mTextRoute;
     Button mButtonPay;
     ImageButton mBtnOn, mBtnOff, mBtnCard, mBtnRoute, mBtnClear, mPairedBtn;
+    Integer money;
 
     BluetoothAdapter mBlueAdapter;
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference macsRef = rootRef.child("macs");
-    DatabaseReference rootCard = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference cardRef = rootRef.child("card");
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,6 @@ public class MainActivity extends AppCompatActivity{
         mPairedTV =  findViewById(R.id.id_Paired);
         mPairedTV.setText(getResources().getString(R.string.SearchBus));
         bScan =      findViewById(R.id.id_BtnPaired);
-        mStatus =    findViewById(R.id.id_Status);
         mPairedTV =  findViewById(R.id.id_Paired);
         mPairedBtn = findViewById(R.id.id_BtnPaired);
         mBtnOn =     findViewById(R.id.id_BtnOn);
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity{
         mTextCard.setText("Оплата");
         mTextRoute = findViewById(R.id.textView8);
         mTextRoute.setText("Маршруты");
-        mBtnClear = findViewById(R.id.id_buttonclear);
+        //mBtnClear = findViewById(R.id.id_buttonclear);
 
 
         mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -112,12 +115,6 @@ public class MainActivity extends AppCompatActivity{
 
         bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
 
-        if (mBlueAdapter == null) {
-            mStatus.setText("Bluetooth недоступен");
-        } else {
-            mStatus.setText("Bluetooth доступен");
-        }
-
         mBtnOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +127,7 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+        /*
         mBtnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,32 +137,29 @@ public class MainActivity extends AppCompatActivity{
                 }else{
                     showToast("Нечего удалять");
                 }
-
-
             }
         });
-                mBtnOff.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mBlueAdapter.isEnabled()) {
-                            mBlueAdapter.disable();
-                            showToast("Выключаем Bluetooth");
-                            showToast("Bluetooth выключен");
-                        } else {
-                            showToast("Bluetooth уже выключен");
-                        }
-                    }
-                });
+
+         */
+        mBtnOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBlueAdapter.isEnabled()) {
+                    mBlueAdapter.disable();
+                    showToast("Выключаем Bluetooth");
+                    showToast("Bluetooth выключен");
+                } else {
+                    showToast("Bluetooth уже выключен");
+                }
+            }
+        });
         mBtnCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent SecAct = new Intent(getApplicationContext(),SecondaryActivity.class);
                 startActivity(SecAct);
-                }
-
-
+            }
         });
-
         mBtnRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +167,7 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(ThiAct);
             }
         });
-        
+
         mButtonPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,65 +176,65 @@ public class MainActivity extends AppCompatActivity{
                     builder.setTitle("Ошибка");
                     builder.setMessage("Маршрут не найден.");
                     builder.setPositiveButton("OK", null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
 
-                    rootCard.child("card").runTransaction(new Transaction.Handler() {
-                        @NonNull
+                }else {
+                    cardRef.child("1").runTransaction(new Transaction.Handler() {
+
                         @Override
-                        public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                            long p = 0;
-                            String value = (String) currentData.getValue();
-                            p = Long.parseLong(value);
-                            if (value == null) {
-                                Toast.makeText(MainActivity.this,"no", Toast.LENGTH_LONG).show();
-                                return Transaction.success(currentData);
-                            }else{
-                                Toast.makeText(MainActivity.this,value,Toast.LENGTH_LONG).show();
+                        public Transaction.Result doTransaction(MutableData mutableData) {
+                            money = mutableData.getValue(Integer.class);
+                            int card;
+                            if (money != null && money >= 28) {
+                                card = money - 28;
+                                mutableData.setValue(card);
                             }
-
-                            //присваиваем новое значение
-                            p = Long.parseLong(value) - 28;
-
-                            // Set value and report transaction success
-                            currentData.setValue(p);
-                            return Transaction.success(currentData);
+                            return Transaction.success(mutableData);
                         }
 
                         @Override
-                        public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-                            if (error == null) {
-                                //всё ОК
+                        public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
+                            Log.d(TAG, "countTransaction:onComplete" + databaseError);
+                            if (money >= 28) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Оплата");
+                                builder.setMessage("Оплата произошла успешно.");
+                                builder.setPositiveButton("ОК", null);
+                                builder.setNegativeButton("Показать чек", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent CheckAct = new Intent(getApplicationContext(), com.example.bb.CheckAct.class);
+                                        startActivity(CheckAct);
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                                bluetoothLeScanner.stopScan(scanCallback);
                             } else {
-                                //произошла ошибка. Она тут: databaseError.toException()
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Ошибка");
+                                builder.setMessage("Недостаточно денег на балансе");
+                                builder.setPositiveButton("ОК", null);
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                                bluetoothLeScanner.stopScan(scanCallback);
                             }
                         }
                     });
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-
-                }else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("Оплата");
-                    builder.setMessage("Оплата произошла успешно.");
-                    builder.setPositiveButton("OK", null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    bluetoothLeScanner.stopScan(scanCallback);
-                    Intent CheckAct = new Intent(getApplicationContext(), com.example.bb.CheckAct.class);
-                    startActivity(CheckAct);
                 }
             }
         });
-
 
 
         mPairedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mBlueAdapter.isEnabled()) {
-                        bluetoothLeScanner = mBlueAdapter.getBluetoothLeScanner();
-                        bluetoothLeScanner.startScan(scanCallback);
-                        deviceFound = false;
+                    bluetoothLeScanner = mBlueAdapter.getBluetoothLeScanner();
+                    bluetoothLeScanner.startScan(scanCallback);
+                    deviceFound = false;
                 } else {
                     showToast("Включите Bluetooth");
                 }
@@ -249,7 +244,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     ScanCallback scanCallback = new ScanCallback() {
-
         @Override
         public void onScanResult(int callbackType, final ScanResult result) {
             super.onScanResult(callbackType, result);
@@ -265,8 +259,8 @@ public class MainActivity extends AppCompatActivity{
                         Object fbmac = ds.getValue();
                         String fbmacstring = String.valueOf(fbmac);
                         if(s.equals(fbmacstring) && rssi > -200){
-                            mPairedTV.setText("Имя маршрута: " + fbname + "\n" + "МAC маршрута: " + fbmac + "\n");
-                            Log.d(TAG, fbname + " RSSI: " + rssi);
+                            mPairedTV.setText("Номер маршрута: " + fbname + "\n" + "МAC маршрута: " + fbmac + "\n");
+                            //Log.d(TAG, fbname + " RSSI: " + rssi);
                         }
                     }
                 }
@@ -296,11 +290,11 @@ public class MainActivity extends AppCompatActivity{
         Toast.makeText(this, msg, Toast.LENGTH_SHORT ).show();
     }
 
-@Override
+    @Override
     protected void onDestroy(){
-    super.onDestroy();
-    mBlueAdapter.disable();
-}
+        super.onDestroy();
+        mBlueAdapter.disable();
+    }
     protected void onStart(){
         super.onStart();
         if (mBlueAdapter.isEnabled()) {

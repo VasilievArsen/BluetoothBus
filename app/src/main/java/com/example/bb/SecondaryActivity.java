@@ -52,9 +52,9 @@ public class SecondaryActivity extends AppCompatActivity {
         super.onStart();
         ValueEventListener eventListener3 = new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot2) {
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                for (DataSnapshot ds : dataSnapshot2.getChildren()) {
                     Object fbbalance = ds.getValue();
                     mBalanceTV.setText("   " + fbbalance + " " + getString(R.string.Rub) + "   ");
                 }

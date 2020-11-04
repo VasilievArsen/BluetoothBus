@@ -42,7 +42,7 @@ public class CheckAct extends AppCompatActivity {
 
                             Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                             ImageCheck.setImageBitmap(bitmap);
-                            Toast.makeText(CheckAct.this, "Image downloaded", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(CheckAct.this, "Image downloaded", Toast.LENGTH_LONG).show();
 
 
                         }

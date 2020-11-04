@@ -7,20 +7,6 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/id_Status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text=""
-        android:textAlignment="center"
-        android:textColor="#B4B8C6"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
         android:id="@+id/id_Paired"
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -43,15 +29,18 @@
         android:id="@+id/id_buttonpay"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/okno"
         android:backgroundTint="@color/colortext"
         android:text="Оплатить"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_BtnPaired" />
+        app:layout_constraintTop_toBottomOf="@+id/id_BtnPaired"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/id_BtnOn"
@@ -152,33 +141,20 @@
         app:layout_constraintTop_toBottomOf="@+id/id_BtnRoute" />
 
     <ImageButton
-        android:id="@+id/id_buttonclear"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/oval"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_Paired"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
-
-    <ImageButton
         android:id="@+id/id_BtnPaired"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginStart="181dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="180dp"
-        android:layout_marginBottom="22dp"
         android:background="@drawable/oval"
         android:backgroundTint="@color/colortext"
-        app:layout_constraintBottom_toTopOf="@+id/id_buttonpay"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
+        android:translationZ="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_Paired"
-        app:srcCompat="@android:drawable/ic_popup_sync"
-        android:elevation="10dp"
-        android:stateListAnimator="@null"
-        android:translationZ="10dp"/>/>
+        app:srcCompat="@android:drawable/ic_popup_sync" />/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
