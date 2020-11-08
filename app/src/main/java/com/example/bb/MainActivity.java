@@ -60,17 +60,15 @@ public class MainActivity extends AppCompatActivity{
     private StorageReference mStorageRef;
 
 
-
     TextView mPairedTV, mTextBon, mTextBoff, mTextCard, mTextRoute;
     Button mButtonPay;
-    ImageButton mBtnOn, mBtnOff, mBtnCard, mBtnRoute, mBtnClear, mPairedBtn;
+    ImageButton mBtnOn, mBtnOff, mBtnCard, mBtnRoute, mPairedBtn;
     Integer money;
 
     BluetoothAdapter mBlueAdapter;
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference macsRef = rootRef.child("macs");
     DatabaseReference cardRef = rootRef.child("card");
-
 
 
     @Override
@@ -96,7 +94,6 @@ public class MainActivity extends AppCompatActivity{
         mTextCard.setText("Оплата");
         mTextRoute = findViewById(R.id.textView8);
         mTextRoute.setText("Маршруты");
-        //mBtnClear = findViewById(R.id.id_buttonclear);
 
 
         mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -127,20 +124,7 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
-        /*
-        mBtnClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ((mPairedTV.getText() != getString(R.string.SearchBus))){
-                    mPairedTV.setText(getResources().getString(R.string.SearchBus));
-                    if(mBlueAdapter.isEnabled()) bluetoothLeScanner.stopScan(scanCallback);
-                }else{
-                    showToast("Нечего удалять");
-                }
-            }
-        });
 
-         */
         mBtnOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,8 +242,8 @@ public class MainActivity extends AppCompatActivity{
                         String fbname = ds.getKey();
                         Object fbmac = ds.getValue();
                         String fbmacstring = String.valueOf(fbmac);
-                        if(s.equals(fbmacstring) && rssi > -200){
-                            mPairedTV.setText("Номер маршрута: " + fbname + "\n" + "МAC маршрута: " + fbmac + "\n");
+                        if(s.equals(fbmacstring) && rssi > -150){
+                            mPairedTV.setText("Номер маршрута: " + fbname + "\n" + "МAC маршрута: " + fbmac + "\n" + rssi);
                             //Log.d(TAG, fbname + " RSSI: " + rssi);
                         }
                     }

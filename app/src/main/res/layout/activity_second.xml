@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".SecondaryActivity">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="560dp"
+        android:layout_height="678dp"
+        android:background="@drawable/karta2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_balance" />
+
     <TextView
         android:id="@+id/id_balance"
         android:layout_width="match_parent"
@@ -61,5 +71,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_balance"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <TextView
+        android:id="@+id/DataView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="48dp"
+        android:text="TextView"
+        android:textColor="#CABEBE"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numbview" />
+
+    <TextView
+        android:id="@+id/numbview"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="332dp"
+        android:fontFamily="sans-serif-black"
+        android:text="TextView"
+        android:textAlignment="viewStart"
+        android:textColor="#CABEBE"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
