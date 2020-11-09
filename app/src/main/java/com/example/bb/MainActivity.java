@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity{
                         String fbname = ds.getKey();
                         Object fbmac = ds.getValue();
                         String fbmacstring = String.valueOf(fbmac);
-                        if(s.equals(fbmacstring) && rssi > -150){
+                        if(s.equals(fbmacstring) && rssi > -100){
                             mPairedTV.setText("Номер маршрута: " + fbname + "\n" + "МAC маршрута: " + fbmac + "\n" + rssi);
                             //Log.d(TAG, fbname + " RSSI: " + rssi);
                         }
